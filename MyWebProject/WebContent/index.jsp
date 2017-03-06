@@ -19,6 +19,5 @@
  	<input type="hidden" value="no-subfolders" name="mode" />
     <input type="submit" value="Senza sottocartelle">
  </form>
- <a href="/cv">Back</a>
 </body>
 </html>
