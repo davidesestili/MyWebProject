@@ -114,7 +114,7 @@ public class GenerateAndDownloadHash extends HttpServlet implements IProgressLis
 			} 
 			catch(Throwable e) 
 			{
-				logger.debug("Si è verificato un errore", e);
+				logger.debug("Si Ã¨ verificato un errore", e);
 			}
 		}
 		else if(modeParam != null && modeParam.trim().equals("recursive"))
@@ -127,7 +127,7 @@ public class GenerateAndDownloadHash extends HttpServlet implements IProgressLis
 			} 
 			catch(Throwable e) 
 			{
-				logger.debug("Si è verificato un errore", e);
+				logger.debug("Si Ã¨ verificato un errore", e);
 			}
 		}
 		else if(modeParam != null && modeParam.trim().equals("no-subfolders"))
@@ -140,7 +140,7 @@ public class GenerateAndDownloadHash extends HttpServlet implements IProgressLis
 			} 
 			catch(Throwable e) 
 			{
-				logger.debug("Si è verificato un errore", e);
+				logger.debug("Si Ã¨ verificato un errore", e);
 			}
 		}
 		else
@@ -224,7 +224,7 @@ public class GenerateAndDownloadHash extends HttpServlet implements IProgressLis
 		} 
 		catch(Throwable e) 
 		{
-			logger.debug("Si è verificato un errore", e);
+			logger.debug("Si Ã¨ verificato un errore", e);
 		}
 		finally
 		{
