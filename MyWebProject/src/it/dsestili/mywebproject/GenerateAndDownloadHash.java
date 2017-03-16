@@ -81,12 +81,11 @@ public class GenerateAndDownloadHash extends HttpServlet implements IProgressLis
 
 		try
 		{
-			String propFileName = PROP_FILE_NAME;
-			input = getClass().getClassLoader().getResourceAsStream(propFileName);
-			
+			input = getClass().getClassLoader().getResourceAsStream(PROP_FILE_NAME);
+
 			if(input == null) 
 			{
-				logger.debug("File di properties non trovato " + propFileName);
+				logger.debug("File di properties non trovato " + PROP_FILE_NAME);
 				return;
 			}
 
