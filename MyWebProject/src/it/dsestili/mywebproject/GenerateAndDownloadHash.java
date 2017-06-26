@@ -54,6 +54,8 @@ public class GenerateAndDownloadHash extends HttpServlet implements IProgressLis
 	private static final Logger logger = Logger.getLogger(GenerateAndDownloadHash.class);
 	private static final String MODE_PARAM = "mode";
 	private static final String PROP_FILE_NAME = "config.properties";
+	private static final String FOLDER = "folder";
+	private static final String ALGORITHM = "algorithm";
 	
 	private String algorithm;
 	private boolean recursive;
@@ -90,8 +92,8 @@ public class GenerateAndDownloadHash extends HttpServlet implements IProgressLis
 			}
 
 			prop.load(input);
-			folder = prop.getProperty("folder");
-			algorithm = prop.getProperty("algorithm");
+			folder = prop.getProperty(FOLDER);
+			algorithm = prop.getProperty(ALGORITHM);
 		}
 		catch(IOException ex)
 		{
