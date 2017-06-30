@@ -121,6 +121,7 @@ public class GenerateAndDownloadHash extends HttpServlet implements IProgressLis
 		{
 			logger.debug("Directory inesistente");
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Directory inesistente");
+			return;
 		}
 
 		if(modeParam != null && modeParam.trim().equals("not-recursive"))
