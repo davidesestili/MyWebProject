@@ -124,6 +124,7 @@ public class GenerateAndDownloadHash extends HttpServlet implements IProgressLis
 			return;
 		}
 
+		logger.debug("Algorithm: " + algorithm);
 		try 
 		{
 			MessageDigest.getInstance(algorithm);
