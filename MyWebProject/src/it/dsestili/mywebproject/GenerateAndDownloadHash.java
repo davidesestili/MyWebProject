@@ -179,6 +179,7 @@ public class GenerateAndDownloadHash extends HttpServlet implements IProgressLis
 		}
 		else
 		{
+			logger.debug("Mode error");
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Mode error");
 		}
 	}
