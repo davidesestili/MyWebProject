@@ -25,6 +25,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Properties;
 import javax.servlet.ServletException;
@@ -115,7 +116,6 @@ public class GenerateAndDownloadHash extends HttpServlet implements IProgressLis
 		}
 		
 		logger.debug("Folder: " + folder);
-		DirectoryScanner scanner = null;
 		File directory = new File(folder);
 		if(!directory.exists())
 		{
@@ -123,6 +123,19 @@ public class GenerateAndDownloadHash extends HttpServlet implements IProgressLis
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Directory inesistente");
 			return;
 		}
+
+		try 
+		{
+			MessageDigest.getInstance(algorithm);
+		} 
+		catch(NoSuchAlgorithmException e) 
+		{
+			logger.debug("Algoritmo inesistente");
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Algoritmo inesistente");
+			return;
+		}
+
+		DirectoryScanner scanner = null;
 
 		if(modeParam != null && modeParam.trim().equals("not-recursive"))
 		{
@@ -168,7 +181,7 @@ public class GenerateAndDownloadHash extends HttpServlet implements IProgressLis
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Mode error");
 		}
 	}
-
+	
 	//restituisce al client il file contenente gli hash code della cartella analizzata
 	//vedi config.properties chiave folder
 	protected void downloadFile(HttpServletResponse response, DirectoryScanner scanner) throws Throwable
