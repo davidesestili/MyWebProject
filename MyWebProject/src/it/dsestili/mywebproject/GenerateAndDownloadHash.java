@@ -43,6 +43,7 @@ import it.dsestili.jhashcode.core.DirectoryScannerRecursive;
 import it.dsestili.jhashcode.core.IProgressListener;
 import it.dsestili.jhashcode.core.IScanProgressListener;
 import it.dsestili.jhashcode.core.ProgressEvent;
+import it.dsestili.jhashcode.core.Utils;
 import it.dsestili.jhashcode.gui.MainWindow;
 
 /**
@@ -74,6 +75,8 @@ public class GenerateAndDownloadHash extends HttpServlet implements IProgressLis
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
+		long start = System.currentTimeMillis();
+		
 		String modeParam = (String)request.getParameter(MODE_PARAM);
 
 		MainWindow.setItalianLocale();
@@ -182,6 +185,9 @@ public class GenerateAndDownloadHash extends HttpServlet implements IProgressLis
 			logger.debug("Mode error");
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Mode error");
 		}
+		
+		long elapsed = System.currentTimeMillis() - start;
+		logger.debug("Elapsed time: " + Utils.getElapsedTime(elapsed, true));
 	}
 	
 	//restituisce al client il file contenente gli hash code della cartella analizzata
