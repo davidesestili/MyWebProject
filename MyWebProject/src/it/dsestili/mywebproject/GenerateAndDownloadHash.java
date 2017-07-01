@@ -184,12 +184,13 @@ public class GenerateAndDownloadHash extends HttpServlet implements IProgressLis
 		{
 			logger.debug("Mode error");
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Mode error");
+			return;
 		}
 		
 		long elapsed = System.currentTimeMillis() - start;
 		logger.debug("Elapsed time: " + Utils.getElapsedTime(elapsed, true));
 	}
-	
+
 	//restituisce al client il file contenente gli hash code della cartella analizzata
 	//vedi config.properties chiave folder
 	protected void downloadFile(HttpServletResponse response, DirectoryScanner scanner) throws Throwable
