@@ -35,7 +35,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
-import it.dsestili.jhashcode.core.Core;
 import it.dsestili.jhashcode.core.DirectoryInfo;
 import it.dsestili.jhashcode.core.DirectoryScanner;
 import it.dsestili.jhashcode.core.DirectoryScannerNotRecursive;
@@ -59,8 +58,8 @@ public class GenerateAndDownloadHash extends HttpServlet implements IProgressLis
 	private static final String FOLDER = "folder";
 	private static final String ALGORITHM = "algorithm";
 	
-	private String algorithm;
-	private boolean recursive;
+	protected String algorithm;
+	protected boolean recursive;
 	
     /**
      * @see HttpServlet#HttpServlet()
@@ -223,6 +222,13 @@ public class GenerateAndDownloadHash extends HttpServlet implements IProgressLis
 		return data;
 	}
 
+	protected File getTempFile() throws IOException
+	{
+		String tempFolderPath = System.getProperty("jboss.server.temp.dir");
+		File temp = File.createTempFile("tempfile", ".tmp", new File(tempFolderPath));
+		return temp;
+	}
+	
 	//genera un file temporaneo contenente gli hash code ed i relativi nomi di file
 	//a partire dall'elenco dei file contenuti nella cartella
 	protected File generateTempFile(File[] files)
@@ -234,9 +240,8 @@ public class GenerateAndDownloadHash extends HttpServlet implements IProgressLis
 		
 		try 
 		{
-			String tempFolderPath = System.getProperty("jboss.server.temp.dir");
-			temp = File.createTempFile("tempfile", ".tmp", new File(tempFolderPath));
-			
+			temp = getTempFile();
+
 			fos = new FileOutputStream(temp);
 			bos = new BufferedOutputStream(fos);
 
@@ -244,7 +249,7 @@ public class GenerateAndDownloadHash extends HttpServlet implements IProgressLis
 			{
 				logger.debug("Sto generando l'hash code del file " + currentFile.getName());
 				
-				Core core = new Core(currentFile, algorithm);
+				it.dsestili.jhashcode.core.Core core = new it.dsestili.jhashcode.core.Core(currentFile, algorithm);
 				core.addIProgressListener(this);
 				String hash = core.generateHash();
 				
