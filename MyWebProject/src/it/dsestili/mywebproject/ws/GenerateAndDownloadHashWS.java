@@ -117,6 +117,27 @@ public class GenerateAndDownloadHashWS extends GenerateAndDownloadHash {
 	
 		this.algorithm = algorithm;
 		
+		if(folder == null || folder.trim().equals(""))
+		{
+			logger.debug("folder is null or blank");
+			r = new Result();
+			return r;
+		}
+
+		if(algorithm == null || algorithm.trim().equals(""))
+		{
+			logger.debug("algorithm is null or blank");
+			r = new Result();
+			return r;
+		}
+		
+		if(modeParam == null || modeParam.trim().equals(""))
+		{
+			logger.debug("mode is null or blank");
+			r = new Result();
+			return r;
+		}
+		
 		logger.debug("Folder: " + folder);
 		File directory = new File(folder);
 		if(!directory.exists())
