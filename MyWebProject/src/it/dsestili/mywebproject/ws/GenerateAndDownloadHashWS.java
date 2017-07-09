@@ -136,6 +136,8 @@ public class GenerateAndDownloadHashWS extends GenerateAndDownloadHash {
 			return r;
 		}
 
+		logger.debug("Mode: " + modeParam);
+
 		DirectoryScanner scanner = null;
 
 		if(modeParam != null && modeParam.trim().equals("not-recursive"))
