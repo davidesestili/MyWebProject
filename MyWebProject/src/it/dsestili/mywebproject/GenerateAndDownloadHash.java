@@ -22,6 +22,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,6 +36,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
+import it.dsestili.jhashcode.core.Core;
 import it.dsestili.jhashcode.core.DirectoryInfo;
 import it.dsestili.jhashcode.core.DirectoryScanner;
 import it.dsestili.jhashcode.core.DirectoryScannerNotRecursive;
@@ -57,6 +59,7 @@ public class GenerateAndDownloadHash extends HttpServlet implements IProgressLis
 	private static final String PROP_FILE_NAME = "config.properties";
 	private static final String FOLDER = "folder";
 	private static final String ALGORITHM = "algorithm";
+	private static final String WARNING_MESSAGE = "Warning: ";
 	
 	protected String algorithm;
 	protected boolean recursive;
@@ -247,22 +250,37 @@ public class GenerateAndDownloadHash extends HttpServlet implements IProgressLis
 			fos = new FileOutputStream(temp);
 			bos = new BufferedOutputStream(fos);
 
-			for(File currentFile : files)
+			for(File f : files)
 			{
-				logger.debug("Sto generando l'hash code del file " + currentFile.getName());
+				logger.debug("Sto generando l'hash code del file " + f.getName());
+
+				String lineOfText = null;
+				try
+				{
+					Core core = new Core(f, algorithm);
+					core.addIProgressListener(this);
+					String hash = core.generateHash();
+
+					lineOfText = hash + " *" + (recursive ? f.getAbsolutePath() : f.getName()) + "\n";
+				}
+				catch(FileNotFoundException e)
+				{
+					lineOfText = WARNING_MESSAGE + e.getMessage() + "\n";
+					logger.debug(e);
+				}
+				catch(IOException e)
+				{
+					lineOfText = WARNING_MESSAGE + e.getMessage() + "\n";
+					logger.debug(e);
+				}
 				
-				it.dsestili.jhashcode.core.Core core = new it.dsestili.jhashcode.core.Core(currentFile, algorithm);
-				core.addIProgressListener(this);
-				String hash = core.generateHash();
-				
-				String lineOfText = hash + " *" + (recursive ? currentFile.getAbsolutePath() : currentFile.getName()) + "\n";
 				byte[] data = lineOfText.getBytes("UTF-8");
-				
+
 				bos.write(data);
 			}
 			
 			logger.debug("File temporaneo creato");
-		} 
+		}
 		catch(IOException e) 
 		{
 			logger.debug("Errore di I/O", e);
