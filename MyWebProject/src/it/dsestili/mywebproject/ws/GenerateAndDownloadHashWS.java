@@ -64,13 +64,10 @@ public class GenerateAndDownloadHashWS extends GenerateAndDownloadHash {
 		while((lineOfText = reader.readLine()) != null)
 		{			
 			String[] hashAndFileName = JVerifier.getHashAndFileName(lineOfText);
-
-			String hash = hashAndFileName[0];
-			String fileName = hashAndFileName[1];
 			
 			FileInfo info = new FileInfo();
-			info.setHash(hash);
-			info.setFileName(fileName);
+			info.setHash(hashAndFileName[0]);
+			info.setFileName(hashAndFileName[1]);
 			
 			infos.add(info);
 		}
