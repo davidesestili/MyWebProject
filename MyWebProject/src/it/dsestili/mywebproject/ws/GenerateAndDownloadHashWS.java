@@ -37,6 +37,7 @@ import it.dsestili.jhashcode.core.DirectoryScannerNotRecursive;
 import it.dsestili.jhashcode.core.DirectoryScannerRecursive;
 import it.dsestili.jhashcode.core.Utils;
 import it.dsestili.jhashcode.gui.MainWindow;
+import it.dsestili.jverifier.JVerifier;
 import it.dsestili.mywebproject.GenerateAndDownloadHash;
 
 public class GenerateAndDownloadHashWS extends GenerateAndDownloadHash {
@@ -61,34 +62,11 @@ public class GenerateAndDownloadHashWS extends GenerateAndDownloadHash {
 		
 		String lineOfText;
 		while((lineOfText = reader.readLine()) != null)
-		{
-			StringBuilder hashStringBuilder = new StringBuilder();
-			StringBuilder fileNameStringBuilder = new StringBuilder();
-			
-			int i;
-			for(i = 0; i < lineOfText.length(); i++)
-			{
-				char c = lineOfText.charAt(i);
-				
-				if(c == ' ')
-				{
-					i += 2;
-					break;
-				}
-				
-				hashStringBuilder.append(c);
-			}
+		{			
+			String[] hashAndFileName = JVerifier.getHashAndFileName(lineOfText);
 
-			String hash = hashStringBuilder.toString();
-			
-			while(i < lineOfText.length())
-			{
-				char c = lineOfText.charAt(i);
-				fileNameStringBuilder.append(c);
-				i++;
-			}
-
-			String fileName = fileNameStringBuilder.toString();
+			String hash = hashAndFileName[0];
+			String fileName = hashAndFileName[1];
 			
 			FileInfo info = new FileInfo();
 			info.setHash(hash);
