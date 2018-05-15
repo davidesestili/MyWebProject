@@ -1,7 +1,7 @@
 # MyWebProject
 
-GenerateAndDownloadHash is a servlet that generate checksums in BSD-style.
+GenerateAndDownloadHash is a servlet that generate checksums in GNU-style.
 
-Is optimized for Wildlfy 10.1.
+Is optimized for WildFly 10.1.
 
 See src/config.properties for configuration.
